@@ -55,7 +55,7 @@ public class EartquakeAdapter extends RecyclerView.Adapter<EartquakeAdapter.MyVi
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
+   View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
 
         MyViewHolder viewHolder = new MyViewHolder(view);
 
@@ -65,13 +65,14 @@ public class EartquakeAdapter extends RecyclerView.Adapter<EartquakeAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Earthquake currentEarthquake = earthquakes.get(position);
-        String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
+        EarthquakeProperties earthquakeProperties = currentEarthquake.getProperties();
+
+        String formattedMagnitude = formatMagnitude(earthquakeProperties.getMagnitude());
         holder.magnitudeView.setText(formattedMagnitude);
 
 
 
-        String originalLocation = currentEarthquake.getLocation();
-
+        String originalLocation = earthquakeProperties.getLocation();
         // If the original location string (i.e. "5km N of Cairo, Egypt") contains
         // a primary location (Cairo, Egypt) and a location offset (5km N of that city)
         // then store the primary location separately from the location offset in 2 Strings,
@@ -80,8 +81,9 @@ public class EartquakeAdapter extends RecyclerView.Adapter<EartquakeAdapter.MyVi
         String locationOffset;
 
         // Check whether the originalLocation string contains the " of " text
-        if (originalLocation.contains(LOCATION_SEPARATOR)) {
-            // Split the string into different parts (as an array of Strings)
+
+            if (originalLocation.contains(LOCATION_SEPARATOR)) {
+               // Split the string into different parts (as an array of Strings)
             // based on the " of " text. We expect an array of 2 Strings, where
             // the first String will be "5km N" and the second String will be "Cairo, Egypt".
             String[] parts = originalLocation.split(LOCATION_SEPARATOR);
@@ -99,7 +101,7 @@ public class EartquakeAdapter extends RecyclerView.Adapter<EartquakeAdapter.MyVi
        holder.primaryLocationView.setText(primaryLocation);
         holder.locationOffsetView.setText(locationOffset);
 
-        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+        Date dateObject = new Date(earthquakeProperties.getTimeInMilliseconds());
         String formattedDate = formatDate(dateObject);
         // Display the date of the current earthquake in that TextView
         holder.dateView.setText(formattedDate);

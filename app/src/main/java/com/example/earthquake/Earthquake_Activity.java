@@ -28,19 +28,21 @@ public class Earthquake_Activity extends AppCompatActivity {
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setMessage("Loading....");
         progressDoalog.show();
-
+        recyclerView = findViewById(R.id.my_recycler_view);
         /*Create handle for the RetrofitInstance interface*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<Earthquake>> call = service.getAllEarthquakes();
-        call.enqueue(new Callback<List<Earthquake>>() {
+        Call<EarthquakeResponse> call = service.getAllEarthquakes();
+        call.enqueue(new Callback<EarthquakeResponse>() {
             @Override
-            public void onResponse(Call<List<Earthquake>> call, Response<List<Earthquake>> response) {
+            public void onResponse(Call<EarthquakeResponse> call, Response<EarthquakeResponse> response) {
+
                 progressDoalog.dismiss();
                 generateDataList(response.body());
             }
 
+
             @Override
-            public void onFailure(Call<List<Earthquake>> call, Throwable t) {
+            public void onFailure(Call<EarthquakeResponse> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(getBaseContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
@@ -48,11 +50,14 @@ public class Earthquake_Activity extends AppCompatActivity {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Earthquake> earthquakes) {
-        recyclerView = findViewById(R.id.my_recycler_view);
-        adapter = new EartquakeAdapter(this,earthquakes);
+    private void generateDataList(EarthquakeResponse earthquakes) {
+
+        adapter = new EartquakeAdapter(this, earthquakes.getFeatures());
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(adapter);
     }
 }

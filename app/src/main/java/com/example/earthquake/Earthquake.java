@@ -1,61 +1,28 @@
 package com.example.earthquake;
 
 public class Earthquake {
-    /** Magnitude of the earthquake */
-    private double mMagnitude;
 
-    /** Location of the earthquake */
-    private String mLocation;
+    private String type;
+    private EarthquakeProperties properties;
 
-    /** Time of the earthquake */
-    private long mTimeInMilliseconds;
-
-    /** Website URL of the earthquake */
-    private String mUrl;
-
-
-    /**
-     * Constructs a new {@link Earthquake} object.
-     *
-     * @param magnitude is the magnitude (size) of the earthquake
-     * @param location is the location where the earthquake happened
-     * @param timeInMilliseconds is the time in milliseconds (from the Epoch) when the
-     *                           earthquake happened
-     * @param url is the website URL to find more details about the earthquake
-     */
-    public Earthquake(double magnitude, String location, long timeInMilliseconds, String url) {
-        mMagnitude = magnitude;
-        mLocation = location;
-        mTimeInMilliseconds = timeInMilliseconds;
-        mUrl = url;
+    public Earthquake(String type, EarthquakeProperties properties){
+        this.type = type;
+        this.properties = properties;
     }
 
-    /**
-     * Returns the magnitude of the earthquake.
-     */
-    public double getMagnitude() {
-        return mMagnitude;
+    public String getType() {
+        return type;
     }
 
-    /**
-     * Returns the location of the earthquake.
-     */
-    public String getLocation() {
-        return mLocation;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    /**
-     * Returns the time of the earthquake.
-     */
-    public long getTimeInMilliseconds() {
-        return mTimeInMilliseconds;
+    public EarthquakeProperties getProperties() {
+        return properties;
     }
 
-    /**
-     * Returns the website URL to find more information about the earthquake.
-     */
-    public String getUrl() {
-        return mUrl;
+    public void setProperties(EarthquakeProperties properties) {
+        this.properties = properties;
     }
 }
-

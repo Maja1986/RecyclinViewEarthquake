@@ -1,16 +1,22 @@
 package com.example.earthquake;
 
+import com.google.gson.annotations.SerializedName;
+
 public class EarthquakeProperties {
     /** Magnitude of the earthquake */
+    @SerializedName("mag")
     private double mMagnitude;
 
     /** Location of the earthquake */
+    @SerializedName("place")
     private String mLocation;
 
     /** Time of the earthquake */
+    @SerializedName("time")
     private long mTimeInMilliseconds;
 
     /** Website URL of the earthquake */
+    @SerializedName("url")
     private String mUrl;
 
 
